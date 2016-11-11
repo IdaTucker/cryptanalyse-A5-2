@@ -95,7 +95,6 @@ def production(N,R1,R2,R3,R4):
 
 def a5_2(K,IV):
 	r1, r2, r3, r4 = init(K, IV)
-	print r4
 	return production (228, r1, r2, r3, r4)
 
 
@@ -141,12 +140,50 @@ def equations_lineaires(R4, s):
                 if r4[9] == m:
                         R3_inconnu = M3 * R3_inconnu
                 r4 = M4 * r4
-        return R1_inconnu, R2_inconnu, R3_inconnu
+        return R1_inconnu, R2_inconnu, R3_inconnu, r4
 
+display3 = false
 s = 2
 R4_connu = Sequence([GF(2)(0), 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
-r1_eq, r2_eq, r3_eq = equations_lineaires(R4_connu, s)
-print "A l'etape",s, ":\n"
-print "R1=", r1_eq, ":\n"
-print "R2=", r2_eq, ":\n"
-print "R3=", r3_eq, ":\n"
+r1_eq, r2_eq, r3_eq, r4_eq = equations_lineaires(R4_connu, s)
+if display3:
+        print "A l'etape",s, ":\n"
+        print "R1=", r1_eq, ":\n"
+        print "R2=", r2_eq, ":\n"
+        print "R3=", r3_eq, ":\n"
+
+print "\n* * * * Question 5 * * * *\n"
+'''
+equations_quadratiques
+entrée: le registre connu R4 et N le nombre de bits de z produit
+sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations linéaires en les x_i
+'''
+def equations_quadratiques(R4, N):
+        # on fait 99 tours en ignorant le bit de sortie
+        r1, r2, r3, r4 = equations_lineaires(R4, 99)
+        equations_quadratiques = []
+        # les N tours produisant la suite chiffrante
+        for i in range(N):
+	        m = maj (r4[6],r4[13],r4[9])
+                if r4[6] == m:
+                        r1 = M1 * r1
+                if r4[13] == m:
+                        r2 = M2 * r2
+                if r4[9] == m:
+                        r3 = M3 * r3
+                r4 = M4 * r4
+                y1 = r1[0] + (r1[3]*(r1[4]+1) + r1[3]*r1[6] + r1[6]*(r1[4]+1))
+                y2 = r2[0] + (r2[8]*(r2[5]+1) + r2[8]*r2[12] + r2[12]*(r2[5]+1))
+                y3 = r3[0] + (r3[4]*(r3[9]+1) + r3[4]*r3[6] + r3[6] * (r3[9]+1))
+                z = y1 + y2 + y3
+                equations_quadratiques.append(z)
+        return equations_quadratiques
+
+
+display5 = false
+eq_quad = equations_quadratiques(R4_connu, 228)
+for i in range(228):
+        if display5: print "z[",i,"] = ",eq_quad[i], "\n"        
+        
+        
+        
