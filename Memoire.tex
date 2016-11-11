@@ -1,0 +1,77 @@
+\documentclass[10.5pt, a4paper, twoside, openright]{report}
+
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}  
+\usepackage[utf8x]{inputenc} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[a4paper, left=2cm, right=2cm, top=2.5cm, bottom=2cm, headheight=40pt]{geometry}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{mathtools}
+\usepackage{algcompatible}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{stmaryrd}
+\usepackage{textcomp}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage{emptypage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{Hashing Functions}
+\author{}
+
+
+\begin{document}
+\begin{titlepage}
+  \begin{sffamily}
+  \begin{center}
+
+    Univesity of Bordeaux\\College of Science \& Technology\\
+           351 Cours de la Liberation\\33400 Talence\\[1em]
+            \textbf{\underline{- Projet Cryptanalyse -}}\\[1.5cm]
+           
+    \includegraphics[scale=0.11]{UB.jpg}
+    \\[3cm]
+
+    { \huge \bfseries Projet sur la cryptanalyse de A5/2\\[0.5cm] }
+    \begin{flushright}
+      \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 1 CSI --- Cryptology \& Computer Security}\\[6.6cm]
+    \end{flushright}
+    
+   
+    \today
+
+  \end{center}
+  \end{sffamily}
+\end{titlepage}
+
+
+%% QUESTION 2
+\include{question2}
+
+%% QUESTION 4
+\include{question4}
+
+
+\nocite{*}
+
+
+\end{document}

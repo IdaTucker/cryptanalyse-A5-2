@@ -1,0 +1,26 @@
+\section{Question 4}
+La forme algébrique normale de la fonction booléenne Maj est:
+$$f(a,b,c) = ab \oplus ac \oplus bc$$
+
+Au $(99+i)^{ième}$ passage par la fonction A5/2-step dans la production, on produit le $(i)^{ième}$ bit de la suite chiffrante: 
+
+\begin{equation}
+\begin{aligned}
+  &z_i =& x^{\lbrack i + 99\rbrack}_0 + \mbox{Maj}(x^{\lbrack i+99\rbrack}_{3}, x^{\lbrack i+99\rbrack}_{4} + 1, x^{\lbrack i+99\rbrack}_{6})) \\
+  & &+ x^{\lbrack i + 99\rbrack}_{19} + \mbox{Maj}(x^{\lbrack i+99\rbrack}_{27}, x^{\lbrack i+99\rbrack}_{24} + 1, x^{\lbrack i+99\rbrack}_{31})) \\
+  & &+ x^{\lbrack i + 99\rbrack}_{41} + \mbox{Maj}(x^{\lbrack i+99\rbrack}_{45}, x^{\lbrack i+99\rbrack}_{50} + 1, x^{\lbrack i+99\rbrack}_{47})) \\
+\end{aligned}
+\end{equation}
+
+On peut remplaçer la fonction Maj par sa forme normale algébrique et on obtient:
+
+\begin{equation}
+\begin{aligned}
+  &z_i =& x^{\lbrack i + 99\rbrack}_0 + (x^{\lbrack i+99\rbrack}_{3}( x^{\lbrack i+99\rbrack}_{4} + 1) + x^{\lbrack i+99\rbrack}_{3} x^{\lbrack i+99\rbrack}_{6} + ( x^{\lbrack i+99\rbrack}_{4} + 1) x^{\lbrack i+99\rbrack}_{6}) \\  
+  & &+ x^{\lbrack i + 99\rbrack}_{19} + (x^{\lbrack i+99\rbrack}_{27}(x^{\lbrack i+99\rbrack}_{24} + 1) + x^{\lbrack i+99\rbrack}_{27} x^{\lbrack i+99\rbrack}_{31} + (x^{\lbrack i+99\rbrack}_{24} + 1)x^{\lbrack i+99\rbrack}_{31}) \\  
+  & &+ x^{\lbrack i + 99\rbrack}_{41} + (x^{\lbrack i+99\rbrack}_{45} (x^{\lbrack i+99\rbrack}_{50} + 1) + x^{\lbrack i+99\rbrack}_{45} x^{\lbrack i+99\rbrack}_{47} + (x^{\lbrack i+99\rbrack}_{50} + 1)x^{\lbrack i+99\rbrack}_{47}) \\
+\end{aligned}
+\end{equation}
+
+
+On a vu que, quelle que soit l'étape k considérée dans la production,$ \forall i \in \left\{ {0,1 \ldots 63}\right\}$ les $x^{\lbrack k \rbrack}_{i}$ sont des équations linéaires des $x_i$. De plus dans le calcul des bits de suite chiffrante détaillés ci-dessus on a uniquement des additions et des multiplications d'ordre deux des $x^{\lbrack k \rbrack}_{i}$. Ceci montre bien que les bits de $z$ peuvent s'exprimer par des équations quadratiques en les $x_i$.
