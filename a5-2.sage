@@ -74,9 +74,9 @@ def a5_2_step(R1,R2,R3,R4):
 	if r4[9] == m:
 		r3, out3 = lfsr_step(P3,r3)
 	r4, out4 = lfsr_step(P4,r4)
-	y1 = r1[0] + maj(R1[3], r1[4]+GF(2)(1), r1[6])
-	y2 = r2[0] + maj(R2[8], r2[5]+GF(2)(1), r2[12])
-	y3 = r3[0] + maj(R3[4], r3[9]+GF(2)(1), r3[6])
+	y1 = r1[0] + maj(r1[3], r1[4]+GF(2)(1), r1[6])
+	y2 = r2[0] + maj(r2[8], r2[5]+GF(2)(1), r2[12])
+	y3 = r3[0] + maj(r3[4], r3[9]+GF(2)(1), r3[6])
 	y = y1 + y2 + y3
 	return r1, r2, r3, r4, y
 
@@ -98,18 +98,23 @@ def a5_2(K,IV):
 	return production (228, r1, r2, r3, r4)
 
 
-print "* * * * TEST * * * *\n"
-# Avec la clef 
+print "\n* * * * Question 1 * * * *\n"
+
+# les variables displayX permettent d'afficher les tests pour la question X
+display1 = true
+# Avec la clef
 k = Sequence([GF(2)(0), 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
 # et l'IV
 iv = Sequence([GF(2)(1), 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 # On obtient la suite chiffrante
 z = Sequence([GF(2)(1), 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
 
-
 my_z = a5_2(k,iv)
-if my_z != z:
-	print "Error, you have found:\n", my_z
+if display1:
+        if my_z != z:
+                print "Error, you have found:\n", my_z
+        else:
+                print "You have successfully found the correct cipher bits\n"
 
 print "\n* * * * Question 3 * * * *\n"
 
