@@ -160,9 +160,9 @@ equations_lineaires
 entrée: le registre connu R4 et l'etape de la production à laquelle on s'interesse s
 sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations linéaires en les x_i
 '''
+BPR = BooleanPolynomialRing(64,'x')
+v = BPR.gens()
 def equations_lineaires(R4, s):
-    BPR = BooleanPolynomialRing(64,'x')
-    v = BPR.gens()
     R1_inconnu = vector(v[:19])
     R2_inconnu = vector(v[19:41])
     R3_inconnu = vector(v[41:])
@@ -226,14 +226,16 @@ def equations_quadratiques(R4, N):
         y2 = r2[0] + (r2[8]*(r2[5]+1) + r2[8]*r2[12] + r2[12]*(r2[5]+1))
         y3 = r3[0] + (r3[4]*(r3[9]+1) + r3[4]*r3[6] + r3[6] * (r3[9]+1))
         z = y1 + y2 + y3
-        print z
+	# les monomes x3, x24 et x45 sont egaux a 1
+	z = z.subs(x3 = 1, x24 = 1, x45 = 1)
         equations_quadratiques.append(z)
     return equations_quadratiques
 
 
 display5 = false
-eq_quad = equations_quadratiques(R4_connu, 228)
-for i in range(228):
+N = 228
+eq_quad = equations_quadratiques(R4_connu, N)
+for i in range(N):
         if display5: print "z[",i,"] = ",eq_quad[i], "\n"        
         
         
@@ -242,9 +244,18 @@ for i in range(228):
 ''' QUESTION 6 '''
 
 print "\n* * * * Question 6 * * * *\n"
-print "-----------TODO-----------"
 
+display6 = true
+M = set
+for i in range(N):
+        M = M.union(set(eq_quad[i].monomials()))
+M.remove(BPR(1))
+M = list(M)
+L = len(M)	
 
+if display6:
+	print "La liste des monomes de degré au plus deux est:\n", M
+	print "Il y a exactement ", L, "monomes distincts.\n"
 
 
 ''' QUESTION 7 '''
