@@ -34,7 +34,22 @@
     linkcolor=black,
     urlcolor=black
 }
-
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
 \title{Hashing Functions}
 \author{}
 
@@ -72,6 +87,9 @@
 
 %% QUESTION 6
 \include{question6}
+
+%% QUESTION 9
+\include{question9}
 
 \nocite{*}
 
