@@ -1,0 +1,73 @@
+\section{Question 9}
+
+
+Soit $A_1$ la matrice de rétroaction du $LFSR_1$. 
+Montrons par récurrence que lors de l'étape d'initialisation, après la première boucle for, l'état du $LFSR_1$ est égal à
+\begin{equation*}
+X = \sum_{i=0}^{63} A_1^i \colvec{4}{0}{\vdots}{0}{K_{63-i}} \\
+  = \colvec{4}{0}{\vdots}{0}{K_{63}} + A_1 \colvec{4}{0}{\vdots}{0}{K_{62}} + \cdots + A_1^{63}  \colvec{4}{0}{\vdots}{0}{K_{0}}
+\label{eq:sn}
+\end{equation*}
+
+Après le premier passage par la première boucle for on a:
+
+\begin{equation*}
+X = \colvec{4}{0}{\vdots}{0}{K_{0}} \\
+\label{eq:sn}
+\end{equation*}
+
+Après le deuxième passage par la première boucle for on a:
+\begin{equation*}
+X = A_1 \colvec{4}{0}{\vdots}{0}{K_{0}} + \colvec{4}{0}{\vdots}{0}{K_{1}} \\
+= \sum_{i=0}^{1} A_1^i \colvec{4}{0}{\vdots}{0}{K_{1-i}}
+\label{eq:sn}
+\end{equation*}
+
+Supposons pour $k \geq 1$ qu'au $k^{ieme}$ passage par la boucle on ai:
+\begin{equation*}
+X = \sum_{i=0}^{k} A_1^i \colvec{4}{0}{\vdots}{0}{K_{k-i}}\\
+\label{eq:sn}
+\end{equation*}
+
+Alors au passage suivant par la boucle on a:
+
+\begin{align*}
+X &= A_1 \sum_{i=0}^{k} A_1^i \colvec{4}{0}{\vdots}{0}{K_{k-i}} + \colvec{4}{0}{\vdots}{0}{K_{k+1}} = \sum_{i=1}^{k+1} A_1^i \colvec{4}{0}{\vdots}{0}{K_{k+1-i}} + \colvec{4}{0}{\vdots}{0}{K_{k+1}} \\
+X &= \sum_{i=0}^{k+1} A_1^i \colvec{4}{0}{\vdots}{0}{K_{k+1-i}}
+\label{eq:sn}
+\end{align*}
+
+On obtient donc bien par récurrence que 
+\begin{equation*}
+X = \sum_{i=0}^{63} A_1^i \colvec{4}{0}{\vdots}{0}{K_{63-i}} \\
+\label{eq:sn}
+\end{equation*}
+
+
+De même, le premier passage par la deuxième boucle for on a:
+\begin{equation*}
+R_1 = A_1 X + \colvec{4}{0}{\vdots}{0}{IV_{0}} = A_1^1 X + \sum_{i=0}^{0} A_1^i \colvec{4}{0}{\vdots}{0}{IV_{0-i}} \\
+\label{eq:sn}
+\end{equation*}
+
+Pour $k \geq 0 $, on suppose:
+
+\begin{equation*}
+R_1 = A_1^{k+1} X + \sum_{i=0}^{k} A_1^i \colvec{4}{0}{\vdots}{0}{IV_{k-i}} \\
+\label{eq:sn}
+\end{equation*}
+
+A l'étape $k+1$ on a alors:
+\begin{align*}
+R_1 &= A_1 \times ( A_1^{k+1} X + \sum_{i=0}^{k} A_1^i \colvec{4}{0}{\vdots}{0}{IV_{k-i}}) + \colvec{4}{0}{\vdots}{0}{IV_{k+1}} \\
+&= A_1^{k+2} X + \sum_{i=0}^{k} A_1^{i+1} \colvec{4}{0}{\vdots}{0}{IV_{k-i}} + \colvec{4}{0}{\vdots}{0}{IV_{k+1}} \\
+&= A_1^{k+2} X + \sum_{i=0}^{k+1} A_1^{i} \colvec{4}{0}{\vdots}{0}{IV_{k+1-i}}
+\label{eq:sn}
+\end{align*}
+
+On obtient bien par récurrence qu'après la deuxième boucle for, l'état du $LFSR_1$ est
+
+\begin{equation*}
+A_1^{22} X + \sum_{i=0}^{21} A_1^i \colvec{4}{0}{\vdots}{0}{IV_{21-i}} \\
+\label{eq:sn}
+\end{equation*}
