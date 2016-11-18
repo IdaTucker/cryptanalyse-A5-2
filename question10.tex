@@ -1,0 +1,17 @@
+\section{Question 10}
+
+En notant $A_2$, $A_3$ et $A_4$ les matrices de rétroactions des $LFSR_2$, $LFSR_3$ et $LFSR_4$, on trouve de même qu'après la première boucle for, les états respectifs des $LFSR_2$, $LFSR_3$ et $LFSR_4$ sont 
+\begin{align*}
+X_2 &= \sum_{i=0}^{63} A_2^i \colvec{4}{0}{\vdots}{0}{K_{63-i}} \\
+X_3 &= \sum_{i=0}^{63} A_3^i \colvec{4}{0}{\vdots}{0}{K_{63-i}} \\
+X_4 &= \sum_{i=0}^{63} A_4^i \colvec{4}{0}{\vdots}{0}{K_{63-i}} \\
+\label{eq:sn}
+\end{align*}
+
+Après la deuxième boucle for, leurs états respectifs sont:
+
+\begin{align*}
+A_2^{22} X_2 + \sum_{i=0}^{21} A_2^i \colvec{4}{0}{\vdots}{0}{IV_{21-i}} \\
+A_3^{22} X_3 + \sum_{i=0}^{21} A_3^i \colvec{4}{0}{\vdots}{0}{IV_{21-i}} \\
+A_4^{22} X_4 + \sum_{i=0}^{21} A_4^i \colvec{4}{0}{\vdots}{0}{IV_{21-i}}
+\end{align*}

@@ -206,7 +206,7 @@ print "\n* * * * Question 5 * * * *\n"
 '''
 equations_quadratiques
 entrée: le registre connu R4 et N le nombre de bits de z produit
-sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations linéaires en les x_i
+sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations quadratiques en les x_i
 '''
 def equations_quadratiques(R4, N):
     # on fait 99 tours en ignorant le bit de sortie
@@ -284,26 +284,16 @@ print "-----------TODO-----------"
 # On considÃ¨re une exÃ©cution de A5/2 donnant N=700 bits de suite chiffrante avec  IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 N = 700
 # Valeur de R4 aprÃ¨s la phase d'initialisation
-R4 =  Sequence([GF(2)(0), 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
+R4_q8 =  Sequence([GF(2)(0), 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
 # Les 700 bits de suite chiffrante
 z = Sequence([GF(2)(0), 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1])
-
-
-
-
-''' QUESTION 8 '''
-
-print "\n* * * * Question 8 * * * *\n"
-print "-----------TODO-----------"
-
 
 
 
 ''' QUESTION 9 '''
 
 print "\n* * * * Question 9 * * * *\n"
-print "-----------TODO-----------"
-
+print "Proof made in the report."
 
 
 
@@ -311,9 +301,44 @@ print "-----------TODO-----------"
 
 print "\n* * * * Question 10 * * * *\n"
 print "-----------TODO-----------"
+BPRK = BooleanPolynomialRing(64,'k')
+K_inconnu = BPR.gens()
 
+' Etats des LFSRs apres la premiere boucle for de init '
 
+X1 = sum(M1^j*vector([0 for i in range(L1-1)]+[K_inconnu[63-j]]) for j in range (64))
+X2 = sum(M2^j*vector([0 for i in range(L2-1)]+[K_inconnu[63-j]]) for j in range (64))
+X3 = sum(M3^j*vector([0 for i in range(L3-1)]+[K_inconnu[63-j]]) for j in range (64))
+X4 = sum(M4^j*vector([0 for i in range(L4-1)]+[K_inconnu[63-j]]) for j in range (64))
 
+' Etats des LFSRs apres la deuxieme boucle for de init, IV est null donc on ignore la somme dans l expression du registre '
+
+R1_q10 = M1^22*X1
+R2_q10 = M2^22*X2
+R3_q10 = M3^22*X3
+R4_q10 = M4^22*X4
+print "--TODO change values of R1 to R8 to correct values from question 8--"
+'var(K_inconnu)'
+R1_q8, R2_q8, R3_q8, R4_q8,  = r1_eq, r2_eq, r3_eq, r4_eq
+
+equations = []
+for i in range(4):
+        ' Get all equations for LFSR1 '
+        for j in range(L1):
+                equations += [R1_q10[j] + R1_q8[j]]
+        ' Get all equations for LFSR2 '
+        for j in range(L2):
+                equations += [R2_q10[j] + R2_q8[j]]
+        ' Get all equations for LFSR3 '
+        for j in range(L3):
+                equations += [R3_q10[j] + R3_q8[j]]
+        ' Get all equations for LFSR4 '
+        for j in range(L4):
+                equations += [R4_q10[j] + R4_q8[j]]
+S = Sequence(equations)
+print S
+sol = S.solve()
+print sol
 
 ''' QUESTION 11 '''
 

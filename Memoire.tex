@@ -1,5 +1,4 @@
-\documentclass[10.5pt, a4paper, twoside, openright]{report}
-
+\documentclass[a4paper]{article}
 \usepackage[francais]{babel}
 \usepackage[T1]{fontenc}  
 \usepackage[utf8x]{inputenc} 
@@ -8,24 +7,17 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[a4paper, left=2cm, right=2cm, top=2.5cm, bottom=2cm, headheight=40pt]{geometry}
-\usepackage{listings}
 \usepackage{color}
 \usepackage{mathtools}
 \usepackage{algcompatible}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-\usepackage{enumitem}
-\usepackage{stmaryrd}
-\usepackage{textcomp}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{shapes}
-\usetikzlibrary{positioning}
 \usepackage[square,sort,comma,numbers]{natbib}
 \usepackage{emptypage}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -59,7 +51,7 @@
   \begin{sffamily}
   \begin{center}
 
-    Univesity of Bordeaux\\College of Science \& Technology\\
+    Univesité de Bordeaux\\ Sciences \& Technologie\\
            351 Cours de la Liberation\\33400 Talence\\[1em]
             \textbf{\underline{- Projet Cryptanalyse -}}\\[1.5cm]
            
@@ -68,7 +60,7 @@
 
     { \huge \bfseries Projet sur la cryptanalyse de A5/2\\[0.5cm] }
     \begin{flushright}
-      \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 2 CSI --- Cryptology \& Computer Security}\\[6.6cm]
+      \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 2 CSI --- Cryptologie \& Sécurité Informatique}\\[6.6cm]
     \end{flushright}
     
    
@@ -90,6 +82,10 @@
 
 %% QUESTION 9
 \include{question9}
+
+%% QUESTION 10
+\include{question10}
+
 
 \nocite{*}
 
