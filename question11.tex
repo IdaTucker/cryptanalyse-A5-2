@@ -1,38 +1,38 @@
 \section{Question 11}
-Notons $R_{i,j}$ l'état du registre i après la phase d'initialisation des exécutions de A5/2 ayant produit les suites $z_j$.\\
+Notons $R_{i,j}$ l'état du registre i après la phase d'initialisation ayant produit les suites $z_j$.\\
 
 Puisque l'IV de $z_0$ est nul, et d'après les questions 9 et 10 on a
 \begin{align*}
-R_{1,0} = A_1^{22} X \\
-R_{2,0} = A_2^{22} X_2\\
-R_{3,0} = A_3^{22} X_3\\
-R_{4,0} = A_4^{22} X_4
+R_{1,0} &= A_1^{22} X \\
+R_{2,0} &= A_2^{22} X_2\\
+R_{3,0} &= A_3^{22} X_3\\
+R_{4,0} &= A_4^{22} X_4
 \end{align*}
 Pour $z_1$ seul $IV_21$ est non null, donc
 \begin{align*}
-R_{1,1} = A_1^{22} X + \colvec{4}{0}{\vdots}{0}{1}} = R_{1,0} + \colvec{4}{0}{\vdots}{0}{1}}\\
-R_{2,1} = A_2^{22} X_2 + \colvec{4}{0}{\vdots}{0}{1}} = R_{2,0} + \colvec{4}{0}{\vdots}{0}{1}} \\
-R_{3,1} = A_3^{22} X_3 + \colvec{4}{0}{\vdots}{0}{1}} = R_{3,0} + \colvec{4}{0}{\vdots}{0}{1}}\\
-R_{4,1} = A_4^{22} X_4 + \colvec{4}{0}{\vdots}{0}{1}} = R_{4,0} + \colvec{4}{0}{\vdots}{0}{1}}
+R_{1,1} = A_1^{22} X + \colvec{4}{0}{\vdots}{0}{1} = R_{1,0} + \colvec{4}{0}{\vdots}{0}{1}\\
+R_{2,1} = A_2^{22} X_2 + \colvec{4}{0}{\vdots}{0}{1} = R_{2,0} + \colvec{4}{0}{\vdots}{0}{1} \\
+R_{3,1} = A_3^{22} X_3 + \colvec{4}{0}{\vdots}{0}{1} = R_{3,0} + \colvec{4}{0}{\vdots}{0}{1}\\
+R_{4,1} = A_4^{22} X_4 + \colvec{4}{0}{\vdots}{0}{1} = R_{4,0} + \colvec{4}{0}{\vdots}{0}{1}
 \end{align*}
 D'où
 \begin{align*}
-R_{1,1} = (x_0, \cdots ,x_{17}, x_{18}+1)\\
-R_{2,1} = (x_19, \cdots ,x_{39}, x_{40}+1)\\
-R_{3,1} = (x_41, \cdots ,x_{17}, x_{63}+1)\\
-R_{4,1} = R_{4,0} + \colvec{4}{0}{\vdots}{0}{1}}
+R_{1,1} &= (x_0, \cdots ,x_{17}, x_{18}+1)\\
+R_{2,1} &= (x_{19}, \cdots ,x_{39}, x_{40}+1)\\
+R_{3,1} &= (x_{41}, \cdots ,x_{17}, x_{63}+1)\\
+R_{4,1} &= R_{4,0} + \colvec{4}{0}{\vdots}{0}{1}
 \end{align*}
 Et enfin 
 \begin{align*}
-R_{1,1} = R_{1,0} + A_1 \colvec{5}{0}{\vdots}{0}{1}{0}} 
-        = R_{1,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}} 
+R_{1,1} &= R_{1,0} + A_1 \colvec{5}{0}{\vdots}{0}{1}{0} 
+        = R_{1,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0} 
         = (x_0, \cdots ,x_{16}+1,x_{17}, x_{18})\\
-R_{2,1} = R_{2,0} + A_2\colvec{5}{0}{\vdots}{0}{1}{0}} 
-        = R_{2,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}}
+R_{2,1} &= R_{2,0} + A_2\colvec{5}{0}{\vdots}{0}{1}{0} 
+        = R_{2,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}
         = (x_{19}, \cdots ,x_{38}+1,x_{37}, x_{40})\\
-R_{3,1} = R_{3,0} + A_3 \colvec{5}{0}{\vdots}{0}{1}{0}} 
-        = R_{3,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}}
+R_{3,1} &= R_{3,0} + A_3 \colvec{5}{0}{\vdots}{0}{1}{0} 
+        = R_{3,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}
         = (x_{41}, \cdots ,x_{61}+1,x_{62}, x_{63}) \\
-R_{4,1} = R_{4,0} + A_4 \colvec{5}{0}{\vdots}{0}{1}{0}}= 
-          R_{4,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}}
+R_{4,1} &= R_{4,0} + A_4 \colvec{5}{0}{\vdots}{0}{1}{0}= 
+          R_{4,0} + \colvec{6}{0}{\vdots}{0}{1}{0}{0}
 \end{align*}
