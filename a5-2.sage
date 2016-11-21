@@ -49,19 +49,19 @@ def init(K, IV):
 	R3 = [0 for i in range(L3)]
 	R4 = [0 for i in range(L4)]
 	for i in range(64):
-		R1, out = lfsr_step(P1,R1)
-		R2, out = lfsr_step(P2,R2)
-		R3, out = lfsr_step(P3,R3)
-		R4, out = lfsr_step(P4,R4)
+		R1, _ = lfsr_step(P1,R1)
+		R2, _ = lfsr_step(P2,R2)
+		R3, _ = lfsr_step(P3,R3)
+		R4, _ = lfsr_step(P4,R4)
 		R1[18] = R1[18] + K[i]
 		R2[21] = R2[21] + K[i]
 		R3[22] = R3[22] + K[i]
 		R4[16] = R4[16] + K[i]
 	for i in range(22):
-		R1, out = lfsr_step(P1,R1)
-		R2, out = lfsr_step(P2,R2)
-		R3, out = lfsr_step(P3,R3)
-		R4, out = lfsr_step(P4,R4)
+		R1, _ = lfsr_step(P1,R1)
+		R2, _ = lfsr_step(P2,R2)
+		R3, _ = lfsr_step(P3,R3)
+		R4, _ = lfsr_step(P4,R4)
 		R1[18] = R1[18] + IV[i]
 		R2[21] = R2[21] + IV[i]
 		R3[22] = R3[22] + IV[i]
@@ -80,11 +80,11 @@ def a5_2_step(R1,R2,R3,R4):
 	r4 = copy(R4)
 	m = maj (r4[6],r4[13],r4[9])
 	if r4[6] == m:
-		r1, out1 = lfsr_step(P1,r1)
+		r1, _ = lfsr_step(P1,r1)
 	if r4[13] == m:
-		r2, out2 = lfsr_step(P2,r2)
+		r2, _ = lfsr_step(P2,r2)
 	if r4[9] == m:
-		r3, out3 = lfsr_step(P3,r3)
+		r3, _ = lfsr_step(P3,r3)
 	r4, out4 = lfsr_step(P4,r4)
 	y1 = r1[0] + maj(r1[3], r1[4]+GF(2)(1), r1[6])
 	y2 = r2[0] + maj(r2[8], r2[5]+GF(2)(1), r2[12])
@@ -206,7 +206,7 @@ print "\n* * * * Question 5 * * * *\n"
 '''
 equations_quadratiques
 entrée: le registre connu R4 et N le nombre de bits de z produit
-sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations quadratiques en les x_i
+sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations linéaires en les x_i
 '''
 def equations_quadratiques(R4, N):
     # on fait 99 tours en ignorant le bit de sortie
@@ -263,16 +263,18 @@ if display6:
 print "\n* * * * Question 7 * * * *\n"
 print "TODO: Améliorer la compléxité && vérifier pour le test du vecteur!!"
 
-Linear_Matrix = Matrix(GF(2), N, L)
-Linear_Vector = vector(GF(2), N)
-for i in range(N):
-    tmp = eq_quad[i].monomials()
-    if tmp[len(tmp)-1].degree() == 0:
-        Linear_Vector[i] = GF(2)(1)
-    for j in range(len(M)):
-        if M[j] in tmp:
-            Linear_Matrix[i,j] = GF(2)(1)
-
+def linear_mat_vect(N, eq_quadratique):
+        Linear_Matrix = Matrix(GF(2), N, L)
+        Linear_Vector = vector(GF(2), N)
+        for i in range(N):
+                tmp = eq_quadratique[i].monomials()
+                if tmp[len(tmp)-1].degree() == 0:
+                #    if tmp[len(tmp)-1] == BPR.one()
+                        Linear_Vector[i] = GF(2)(1)
+                for j in range(len(M)):
+                        if M[j] in tmp:
+                                Linear_Matrix[i,j] = GF(2)(1)
+        return Linear_Matrix, Linear_Vector
             
 
 
@@ -284,16 +286,28 @@ print "-----------TODO-----------"
 # On considÃ¨re une exÃ©cution de A5/2 donnant N=700 bits de suite chiffrante avec  IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 N = 700
 # Valeur de R4 aprÃ¨s la phase d'initialisation
-R4_q8 =  Sequence([GF(2)(0), 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
+R4 =  Sequence([GF(2)(0), 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
 # Les 700 bits de suite chiffrante
 z = Sequence([GF(2)(0), 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1])
+
+Lin_Matrix, Lin_Vector = linear_mat_vect(700, equations_quadratiques(R4, 700))
+Result = Lin_Matrix.solve_right(Lin_Vector + z)
+
+
+
+''' QUESTION 8 '''
+
+print "\n* * * * Question 8 * * * *\n"
+print "-----------TODO-----------"
+
 
 
 
 ''' QUESTION 9 '''
 
 print "\n* * * * Question 9 * * * *\n"
-print "Proof made in the report."
+print "-----------TODO-----------"
+
 
 
 
@@ -301,57 +315,9 @@ print "Proof made in the report."
 
 print "\n* * * * Question 10 * * * *\n"
 print "-----------TODO-----------"
-BPRK = BooleanPolynomialRing(64,'k')
-K_inconnu = BPR.gens()
 
-' Etats des LFSRs apres la premiere boucle for de init '
 
-X1 = sum(M1^j*vector([0 for i in range(L1-1)]+[K_inconnu[63-j]]) for j in range (64))
-X2 = sum(M2^j*vector([0 for i in range(L2-1)]+[K_inconnu[63-j]]) for j in range (64))
-X3 = sum(M3^j*vector([0 for i in range(L3-1)]+[K_inconnu[63-j]]) for j in range (64))
-X4 = sum(M4^j*vector([0 for i in range(L4-1)]+[K_inconnu[63-j]]) for j in range (64))
 
-' Etats des LFSRs apres la deuxieme boucle for de init, IV est null donc on ignore la somme dans l expression du registre '
-
-R1_q10 = M1^22*X1
-R2_q10 = M2^22*X2
-R3_q10 = M3^22*X3
-R4_q10 = M4^22*X4
-print "--TODO change values of R1 to R8 to correct values from question 8--"
-'var(K_inconnu)'
-R1_q8, R2_q8, R3_q8, R4_q8,  = r1_eq, r2_eq, r3_eq, r4_eq
-
-equations = []
-for i in range(4):
-        ' Get all equations for LFSR1 '
-        for j in range(L1):
-                equations += [R1_q10[j] + R1_q8[j]]
-        ' Get all equations for LFSR2 '
-        for j in range(L2):
-                equations += [R2_q10[j] + R2_q8[j]]
-        ' Get all equations for LFSR3 '
-        for j in range(L3):
-                equations += [R3_q10[j] + R3_q8[j]]
-        ' Get all equations for LFSR4 '
-        for j in range(L4):
-                equations += [R4_q10[j] + R4_q8[j]]
-S = Sequence(equations)
-print S
-sol = S.solve()
-print sol
-
-'load https://www.math.u-bordeaux.fr/~gcastagn/Cryptanalyse/A5_2-3frames.sage'
-# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# Valeur de R4 aprÃ¨s la phase d'initialisation
-R4 =  Sequence([GF(2)(1), 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1])
-
-z0 = Sequence([GF(2)(1), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1])
-
-# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-z1 = Sequence([GF(2)(0), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0])
-
-# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
-z2 = Sequence([GF(2)(0), 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0])
 
 ''' QUESTION 11 '''
 
