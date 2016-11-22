@@ -14,6 +14,7 @@ L3 = 23
 P4 = x^17 + x^12 + 1	
 L4 = 17
 
+LK = 64
 ''' Fonctions Générales sur les LFSR '''
 
 ' Tour de LFSR "simple" '
@@ -48,7 +49,7 @@ def init(K, IV):
 	R2 = [0 for i in range(L2)]
 	R3 = [0 for i in range(L3)]
 	R4 = [0 for i in range(L4)]
-	for i in range(64):
+	for i in range(LK):
 		R1, _ = lfsr_step(P1,R1)
 		R2, _ = lfsr_step(P2,R2)
 		R3, _ = lfsr_step(P3,R3)
@@ -107,9 +108,9 @@ def production(N,R1,R2,R3,R4):
 	return z
 
 ' Suite chiffrante de longueur 228 du LFSR A5-2 '
-def a5_2(K,IV):
+def a5_2(K,IV,nb_bits):
 	r1, r2, r3, r4 = init(K, IV)
-	return production (228, r1, r2, r3, r4)
+	return production (nb_bits, r1, r2, r3, r4)
 
 
 
@@ -127,7 +128,7 @@ iv = Sequence([GF(2)(1), 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 # On obtient la suite chiffrante
 z = Sequence([GF(2)(1), 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0])
 
-my_z = a5_2(k,iv)
+my_z = a5_2(k,iv,228)
 if display1:
         if my_z != z:
                 print "Error, you have found:\n", my_z
@@ -235,8 +236,9 @@ def equations_quadratiques(R4, N):
 display5 = false
 N = 228
 eq_quad = equations_quadratiques(R4_connu, N)
-for i in range(N):
-        if display5: print "z[",i,"] = ",eq_quad[i], "\n"        
+if display5:
+	for i in range(N):
+        	print "z[",i,"] = ",eq_quad[i], "\n"        
         
         
         
@@ -274,48 +276,51 @@ if display6:
 print "\n* * * * Question 7 * * * *\n"
 print "TODO: Améliorer la compléxité && vérifier pour le test du vecteur!!"
 
-def linear_mat_vect(N, eq_quadratique):
-        Linear_Matrix = Matrix(GF(2), N, L)
-        Linear_Vector = vector(GF(2), N)
-        for i in range(N):
+def linear_mat_vect(num_lines, num_cols, eq_quadratique, monoms):
+        Linear_Matrix = Matrix(GF(2), num_lines, num_cols)
+        Linear_Vector = vector(GF(2), num_lines)
+        for i in range(num_lines):
                 tmp = eq_quadratique[i].monomials()
                 if tmp[len(tmp)-1].degree() == 0:
                         Linear_Vector[i] = GF(2)(1)
-                for j in range(len(M)):
-                        if M[j] in tmp:
+                for j in range(num_cols):
+                        if monoms[j] in tmp:
                                 Linear_Matrix[i,j] = GF(2)(1)
         return Linear_Matrix, Linear_Vector
             
-
-
+	
 ''' QUESTION 8 '''
 
 print "\n* * * * Question 8 * * * *\n"
-print "-----------TODO-----------"
 
-# On considÃ¨re une exÃ©cution de A5/2 donnant N=700 bits de suite chiffrante avec  IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+# On considere une execution de A5/2 donnant N=700 bits de suite chiffrante avec  IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 N = 700
-# Valeur de R4 aprÃ¨s la phase d'initialisation
+# Valeur de R4 apres la phase d'initialisation
 R4 =  Sequence([GF(2)(0), 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
 # Les 700 bits de suite chiffrante
 z = Sequence([GF(2)(0), 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1])
 
-Lin_Matrix, Lin_Vector = linear_mat_vect(700, equations_quadratiques(R4, 700))
+Lin_Matrix, Lin_Vector = linear_mat_vect(700,L, equations_quadratiques(R4, 700),M)
 Result = Lin_Matrix.solve_right(Lin_Vector + vector(z))
 
 Registers = [0] * 64
 for i in range(len(M_deg1)):
     Registers[i] = Result[M_deg1[i][0]]
-Registers[3] = BPR.one()
-Registers[24] = BPR.one()
-Registers[45] = BPR.one()
+Registers[3] = GF(2)(1)
+Registers[24] = GF(2)(1)
+Registers[45] = GF(2)(1)
 
-''' QUESTION 8 '''
+R1_q8 = Registers[:19]
+R2_q8 = Registers[19:41]
+R3_q8 = Registers[41:]
+R4_q8 = R4	
 
-print "\n* * * * Question 8 * * * *\n"
-print "-----------TODO-----------"
-
-
+display8 = true
+if display8:
+	z_test = production (N,R1_q8,R2_q8,R3_q8,R4_q8)		
+	if z_test == z:
+		print "You have successfully found the correct registers after initialisation.\n"
 
 
 ''' QUESTION 9 '''
@@ -324,14 +329,56 @@ print "\n* * * * Question 9 * * * *\n"
 print "-----------TODO-----------"
 
 
-
-
 ''' QUESTION 10 '''
 
 print "\n* * * * Question 10 * * * *\n"
 print "-----------TODO-----------"
 
+# Creation de variables pour la clef k
 
+BPRK = BooleanPolynomialRing(64,'k')
+k_bits = BPR.gens()
+iv_q10 = Sequence([GF(2)(0) for i in range(LK)])
+
+# Etats des LFSRs apres la premiere boucle for de init 
+
+X1 = sum(M1^j*vector([0 for i in range(L1-1)]+[k_bits[63-j]]) for j in range (64))
+X2 = sum(M2^j*vector([0 for i in range(L2-1)]+[k_bits[63-j]]) for j in range (64))
+X3 = sum(M3^j*vector([0 for i in range(L3-1)]+[k_bits[63-j]]) for j in range (64))
+X4 = sum(M4^j*vector([0 for i in range(L4-1)]+[k_bits[63-j]]) for j in range (64))
+
+# Etats des LFSRs apres la deuxieme boucle for de init,
+# IV est null donc on ignore la somme dans l'expression du registre
+
+R1_q10 = M1^22*X1
+R2_q10 = M2^22*X2
+R3_q10 = M3^22*X3
+R4_q10 = M4^22*X4
+
+eq_k = list(R1_q10) + list(R2_q10) + list(R3_q10) + list(R4_q10)
+
+# Creation d'une matrice qui a un 1 en position i,j
+# si la coordonnée j de k_bits apparaît dans l'equation i
+
+nb_lin = L1 + L2 + L3 + L4
+K_Matrix, K_Vector = linear_mat_vect(nb_lin, LK, eq_k, k_bits)
+
+V = VectorSpace	(GF(2),4)
+for v in V:	
+	R1_q8[3] = v[0]
+	R2_q8[5] = v[1]
+	R3_q8[4] = v[2]
+	R4_q8[6] = v[3]
+	Registers_q10 = list(R1_q8) + list(R2_q8) + list(R3_q8) + list(R4_q8)
+	try:
+		K_Result = K_Matrix.solve_right(K_Vector + vector(Registers_q10))
+		z_test = a5_2(K_Result,iv_q10,N)
+		if z_test == z:
+			if display10:
+				print "You have successfully found the key.\n"	
+			break
+	except ValueError:
+		continue
 
 
 ''' QUESTION 11 '''
