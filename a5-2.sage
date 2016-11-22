@@ -164,6 +164,7 @@ sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'é
 BPR = BooleanPolynomialRing(64,'x')
 v = BPR.gens()
 def equations_lineaires(R4, s):
+    v
     R1_inconnu = vector(v[:19])
     R2_inconnu = vector(v[19:41])
     R3_inconnu = vector(v[41:])
@@ -274,7 +275,7 @@ if display6:
 ''' QUESTION 7 '''
 
 print "\n* * * * Question 7 * * * *\n"
-print "TODO: Améliorer la compléxité && vérifier pour le test du vecteur!!"
+print "TODO: Améliorer la compléxité"
 
 def linear_mat_vect(num_lines, num_cols, eq_quadratique, monoms):
         Linear_Matrix = Matrix(GF(2), num_lines, num_cols)
@@ -316,7 +317,7 @@ R2_q8 = Registers[19:41]
 R3_q8 = Registers[41:]
 R4_q8 = R4	
 
-display8 = true
+display8 = false
 if display8:
 	z_test = production (N,R1_q8,R2_q8,R3_q8,R4_q8)		
 	if z_test == z:
@@ -363,12 +364,13 @@ eq_k = list(R1_q10) + list(R2_q10) + list(R3_q10) + list(R4_q10)
 nb_lin = L1 + L2 + L3 + L4
 K_Matrix, K_Vector = linear_mat_vect(nb_lin, LK, eq_k, k_bits)
 
+display10 = false	
 V = VectorSpace	(GF(2),4)
-for v in V:	
-	R1_q8[3] = v[0]
-	R2_q8[5] = v[1]
-	R3_q8[4] = v[2]
-	R4_q8[6] = v[3]
+for vec in V:	
+	R1_q8[3] = vec[0]
+	R2_q8[5] = vec[1]
+	R3_q8[4] = vec[2]
+	R4_q8[6] = vec[3]
 	Registers_q10 = list(R1_q8) + list(R2_q8) + list(R3_q8) + list(R4_q8)
 	try:
 		K_Result = K_Matrix.solve_right(K_Vector + vector(Registers_q10))
@@ -400,10 +402,41 @@ print "-----------TODO-----------"
 ''' QUESTION 13 '''
 
 print "\n* * * * Question 13 * * * *\n"
-print "-----------TODO-----------"
 
+# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# Valeur de R4 aprÃ¨s la phase d'initialisation
+R4 =  Sequence([GF(2)(1), 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1])
 
+z0 = Sequence([GF(2)(1), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1])
 
+# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+z1 = Sequence([GF(2)(0), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0])
+
+# suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+z2 = Sequence([GF(2)(0), 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0])
+
+N = 228
+eq_quad_q12_iv0 = equations_quadratiques(R4, N)
+eq_quad_q12_iv1 = copy(eq_quad_q12_iv0)
+eq_quad_q12_iv2 = copy(eq_quad_q12_iv0)
+
+for i in range(N):
+	eq_quad_q12_iv1[i] = eq_quad_q12_iv1[i].subs(x18 = v[18] + 1, x40 = v[40] + 1, x63 = v[63] + 1)
+	eq_quad_q12_iv2[i] = eq_quad_q12_iv2[i].subs(x16 = v[16] + 1 ,x38 = v[38] + 1, x61 = v[61] + 1)
+if eq_quad_q12_iv1 == eq_quad_q12_iv0:
+	print "Error generating quadratic equations\n"
+
+Lin_Matrix_z0, Lin_Vector1_z0 = linear_mat_vect(N, L, eq_quad_q12_iv0, M)
+Lin_Matrix_z1, Lin_Vector1_z1 = linear_mat_vect(N, L, eq_quad_q12_iv1, M)
+Lin_Matrix_z2, Lin_Vector1_z2 = linear_mat_vect(N, L, eq_quad_q12_iv2, M)
+Lin_Matrix_z0_z1_z2 = Lin_Matrix_z0.stack(Lin_Matrix_z1.stack(Lin_Matrix_z2))
+Lin_Vector_z0_z1_z2 =  vector(list(Lin_Vector1_z0) + list(Lin_Vector1_z1) + list(Lin_Vector1_z2) )
+z0_z1_z2 = vector( z0 + z1 + z2 )
+
+try:	
+	Result = Lin_Matrix_z0_z1_z2.solve_right(Lin_Vector_z0_z1_z2 + z0_z1_z2 )
+except ValueError:
+	print "Aucune solution\n"
 
 ''' QUESTION 14 '''
 
