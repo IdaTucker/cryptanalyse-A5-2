@@ -1,7 +1,23 @@
-\section{Question 4}
-La forme algébrique normale de la fonction booléenne Maj est:
-$$f(a,b,c) = ab \oplus ac \oplus bc$$
+\section{Expression des bits de z comme équations quadratiques en les $x_i$}
+\begin{table}[h!]
+\centering
+\begin{tabular}{l l l|r}
+a & b & c & Maj(a,b,c) \\\hline
+0 & 0 & 0 & 0  \\
+0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0  \\
+1 & 0 & 1 & 1 \\
+1 & 1 & 0 & 1 \\
+1 & 1 & 1 & 1 \\
 
+\end{tabular}
+\caption{\label{tab:widgets}Table de vérité de Maj}
+\end{table}
+
+On voit, d'après sa table de véritée, que la forme algébrique normale de la fonction booléenne Maj est:
+$$f(a,b,c) = ab \oplus ac \oplus bc$$
 Au $(99+i)^{ième}$ passage par la fonction A5/2-step dans la production, on produit le $(i)^{ième}$ bit de la suite chiffrante: 
 
 \begin{equation}
