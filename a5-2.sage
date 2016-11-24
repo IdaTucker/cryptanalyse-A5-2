@@ -338,7 +338,7 @@ print "-----------TODO-----------"
 # Creation de variables pour la clef k
 
 BPRK = BooleanPolynomialRing(64,'k')
-k_bits = BPR.gens()
+k_bits = BPRK.gens()
 iv_q10 = Sequence([GF(2)(0) for i in range(LK)])
 
 # Etats des LFSRs apres la premiere boucle for de init 
@@ -405,7 +405,7 @@ print "\n* * * * Question 13 * * * *\n"
 
 # suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # Valeur de R4 aprÃ¨s la phase d'initialisation
-R4 =  Sequence([GF(2)(1), 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1])
+R4_q13 =  Sequence([GF(2)(1), 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1])
 
 z0 = Sequence([GF(2)(1), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1])
 
@@ -415,26 +415,39 @@ z1 = Sequence([GF(2)(0), 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1
 # suite chiffrante de 228 bits produite par A_5/2 clef K et IV = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
 z2 = Sequence([GF(2)(0), 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0])
 
+# taille des chiffrés
 N = 228
-eq_quad_q12_iv0 = equations_quadratiques(R4, N)
-eq_quad_q12_iv1 = copy(eq_quad_q12_iv0)
-eq_quad_q12_iv2 = copy(eq_quad_q12_iv0)
 
+# génération des équations quadratiques avec modifications des Registres 4
+R41_q13 = copy(R4_q13)
+R41_q13[len(R41_q13)-1] += 1
+R42_q13 = copy(R4_q13)
+R42_q13[len(R42_q13)-2] += 1
+eq_quad_q12_iv0 = equations_quadratiques(R4_q13, N)
+eq_quad_q12_iv1 = equations_quadratiques(R41_q13, N)
+eq_quad_q12_iv2 = equations_quadratiques(R42_q13, N)
+
+# remplacement des monômes impactés par les diffèrences d'IV entre les sites chiffrantes
+# et ce, pour les res rgistres 1, 2 et 3
 for i in range(N):
 	eq_quad_q12_iv1[i] = eq_quad_q12_iv1[i].subs(x18 = v[18] + 1, x40 = v[40] + 1, x63 = v[63] + 1)
-	eq_quad_q12_iv2[i] = eq_quad_q12_iv2[i].subs(x16 = v[16] + 1 ,x38 = v[38] + 1, x61 = v[61] + 1)
+	eq_quad_q12_iv2[i] = eq_quad_q12_iv2[i].subs(x17 = v[17] + 1 ,x39 = v[39] + 1, x62 = v[62] + 1)
 if eq_quad_q12_iv1 == eq_quad_q12_iv0:
 	print "Error generating quadratic equations\n"
 
+# génération des Matrices et Vecteurs pour les calculs
 Lin_Matrix_z0, Lin_Vector1_z0 = linear_mat_vect(N, L, eq_quad_q12_iv0, M)
 Lin_Matrix_z1, Lin_Vector1_z1 = linear_mat_vect(N, L, eq_quad_q12_iv1, M)
 Lin_Matrix_z2, Lin_Vector1_z2 = linear_mat_vect(N, L, eq_quad_q12_iv2, M)
 Lin_Matrix_z0_z1_z2 = Lin_Matrix_z0.stack(Lin_Matrix_z1.stack(Lin_Matrix_z2))
 Lin_Vector_z0_z1_z2 =  vector(list(Lin_Vector1_z0) + list(Lin_Vector1_z1) + list(Lin_Vector1_z2) )
 z0_z1_z2 = vector( z0 + z1 + z2 )
+tmp = Lin_Vector_z0_z1_z2 + z0_z1_z2
 
+# test pour trouver la solution 
 try:	
-	Result = Lin_Matrix_z0_z1_z2.solve_right(Lin_Vector_z0_z1_z2 + z0_z1_z2 )
+    Result = Lin_Matrix_z0_z1_z2.solve_right(tmp )
+    print Result
 except ValueError:
 	print "Aucune solution\n"
 
