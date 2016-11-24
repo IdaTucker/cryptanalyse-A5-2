@@ -164,7 +164,6 @@ sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'é
 BPR = BooleanPolynomialRing(64,'x')
 v = BPR.gens()
 def equations_lineaires(R4, s):
-    v
     R1_inconnu = vector(v[:19])
     R2_inconnu = vector(v[19:41])
     R3_inconnu = vector(v[41:])
@@ -327,13 +326,11 @@ if display8:
 ''' QUESTION 9 '''
 
 print "\n* * * * Question 9 * * * *\n"
-print "-----------TODO-----------"
 
 
 ''' QUESTION 10 '''
 
 print "\n* * * * Question 10 * * * *\n"
-print "-----------TODO-----------"
 
 # Creation de variables pour la clef k
 
@@ -381,12 +378,11 @@ for vec in V:
 			break
 	except ValueError:
 		continue
-
+    
 
 ''' QUESTION 11 '''
 
 print "\n* * * * Question 11 * * * *\n"
-print "-----------TODO-----------"
 
 
 
@@ -394,7 +390,6 @@ print "-----------TODO-----------"
 ''' QUESTION 12 '''
 
 print "\n* * * * Question 12 * * * *\n"
-print "-----------TODO-----------"
 
 
 
@@ -447,9 +442,41 @@ tmp = Lin_Vector_z0_z1_z2 + z0_z1_z2
 # test pour trouver la solution 
 try:	
     Result = Lin_Matrix_z0_z1_z2.solve_right(tmp )
-    print Result
 except ValueError:
 	print "Aucune solution\n"
+
+Registers = [0] * 64
+for i in range(len(M_deg1)):
+    Registers[i] = Result[M_deg1[i][0]]
+Registers[3] = GF(2)(1)
+Registers[24] = GF(2)(1)
+Registers[45] = GF(2)(1)
+
+# définition des regitres de cahcune des suites chiffrantes: R{registres}{suite}
+R10_q13 = Registers[:19]
+R20_q13 = Registers[19:41]
+R30_q13 = Registers[41:64]
+
+R11_q13 = copy(R10_q13)
+R21_q13 = copy(R20_q13)
+R31_q13 = copy(R30_q13)
+R11_q13[len(R11_q13)-1] += GF(2)(1)
+R21_q13[len(R21_q13)-1] += GF(2)(1)
+R31_q13[len(R31_q13)-1] += GF(2)(1)
+
+R12_q13 = copy(R10_q13)
+R22_q13 = copy(R20_q13)
+R32_q13 = copy(R30_q13)
+R12_q13[len(R12_q13)-2] += GF(2)(1)
+R22_q13[len(R22_q13)-2] += GF(2)(1)
+R32_q13[len(R32_q13)-2] += GF(2)(1)
+
+display13 = true
+if display13:
+    if (production(N, R10_q13, R20_q13, R30_q13, R4_q13) == z0) \
+        and (production(N, R11_q13, R21_q13, R31_q13, R41_q13) == z1) \
+        and (production(N, R12_q13, R22_q13, R32_q13, R42_q13) == z2):
+        print "You have sucessfully recover all the registers"        
 
 ''' QUESTION 14 '''
 
