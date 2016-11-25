@@ -103,17 +103,17 @@ def a5_2_step(R1,R2,R3,R4):
 
 ' Production de suite chiffrante du LFSR A5-2 de longueur N '
 def production(N,R1,R2,R3,R4):
-	z = []
-	r1 = copy(R1)
-	r2 = copy(R2)
-	r3 = copy(R3)
-	r4 = copy(R4)
-	for i in range(99):
-	        r1,r2,r3,r4, out = a5_2_step(r1,r2,r3,r4)
-	for i in range(N):
-		r1,r2,r3,r4, out = a5_2_step(r1,r2,r3,r4)
-		z.append(out)
-	return z
+    z = []
+    r1 = copy(R1)
+    r2 = copy(R2)
+    r3 = copy(R3)
+    r4 = copy(R4)
+    for i in range(99):
+        r1,r2,r3,r4, out = a5_2_step(r1,r2,r3,r4)
+    for i in range(N):
+        r1,r2,r3,r4, out = a5_2_step(r1,r2,r3,r4)
+        z.append(out)
+    return z
 
 ' Suite chiffrante de longueur 228 du LFSR A5-2 '
 def a5_2(K,IV,nb_bits):
@@ -170,8 +170,8 @@ equations_lineaires
 entrée: le registre connu R4 et l'etape de la production à laquelle on s'interesse s
 sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'équations linéaires en les x_i
 '''
-BPR = BooleanPolynomialRing(64,'x')
-v = BPR.gens()
+BPRX = BooleanPolynomialRing(64,'x')
+v = BPRX.gens()
 def equations_lineaires(R4, s):
     R1_inconnu = vector(v[:19])
     R2_inconnu = vector(v[19:41])
@@ -261,7 +261,7 @@ display6 = false or display
 M = set
 for i in range(N):
         M = M.union(set(eq_quad[i].monomials()))
-M.remove(BPR(1))
+M.remove(BPRX(1))
 M = list(M)
 M.sort()
 M.reverse()
@@ -296,8 +296,10 @@ def linear_mat_vect(num_lines, num_cols, eq_quadratique, monoms):
                         if monoms[j] in tmp:
                                 Linear_Matrix[i,j] = GF(2)(1)
         return Linear_Matrix, Linear_Vector
-            
-	
+
+print "Linearization made in a function."
+
+
 ''' QUESTION 8 '''
 
 print "\n* * * * Question 8 * * * *\n"
@@ -329,12 +331,13 @@ display8 = false or display
 if display8:
 	z_test = production (N,R1_q8,R2_q8,R3_q8,R4_q8)		
 	if z_test == z:
-		print "You have successfully found the correct registers after initialisation.\n"
+		print "You have successfully found the correct registers after initialisation."
 
 
 ''' QUESTION 9 '''
 
 print "\n* * * * Question 9 * * * *\n"
+print "Proof made in the report."
 
 
 ''' QUESTION 10 '''
@@ -383,7 +386,7 @@ for vec in V:
 		z_test = a5_2(K_Result,iv_q10,N)
 		if z_test == z:
 			if display10:
-				print "You have successfully found the key.\n"	
+				print "You have successfully found the key."	
 			break
 	except ValueError:
 		continue
@@ -392,14 +395,14 @@ for vec in V:
 ''' QUESTION 11 '''
 
 print "\n* * * * Question 11 * * * *\n"
-
+print "Proof made in the report."
 
 
 
 ''' QUESTION 12 '''
 
 print "\n* * * * Question 12 * * * *\n"
-
+print "Proof made in the report."
 
 
 
@@ -528,7 +531,21 @@ for vec in V:
 		z_test = a5_2(K_Result,iv_q13,N)
 		if z_test == z0:
 			if display13:
-				print "You have successfully found the key.\n"	
+				print "You have successfully found the key."	
 			break
 	except ValueError:
 		continue
+
+
+
+''' QUESTION 14 '''
+
+print "\n* * * * Question 14 * * * *\n"
+print "Proof made in the report."
+
+
+
+''' QUESTION 15 '''
+
+print "\n* * * * Question 15 * * * *\n"
+print "Proof made in the report."

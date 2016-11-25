@@ -1,11 +1,11 @@
 \section{Attaque permettant de retrouver la clef K à partir de $z_0, z_1, z_2$}
 Afin de trouver les $x_i$ on aura, comme dans la question 8, à créer trois matrices (une pour chacune des suites $z_i$)
-chacune possédant 228 équations linéaires en les 655 monomes (on suppose toujours $R_4$ connu, ainsi que les bits fixés à la fin de l'initialisation).
+chacune possédant 228 équations linéaires en les 655 monômes (on suppose toujours $R_4$ connu, ainsi que les bits fixés à la fin de l'initialisation).
 On a donc $684 = 3 \times 228$ équations linéaires et 655 inconnues, on peut résoudre le système et retrouver les $(x_i)_{0\leq i \leq 63}$.
 
 Connaissant ces $x_i$ on pourra retrouver la clef, comme dans la question 9, en résolvant un système linéaire de $81$ équations à 64 inconnues.
 
-En utilisant seulement l'IV produisant la suite $z_0$ on a 19 équations données par le registre $R_1$,
+En utilisant seulement l'IV produisant la suite $z_0$, on a 19 équations données par le registre $R_1$,
 22 équations données par le registre $R_2$, 23 équations données par le registre $R_3$ et 17 équations données par le registre $R_4$.
 Donc au total 81 équations linéairement dépendantes des bits de la clef K.
 

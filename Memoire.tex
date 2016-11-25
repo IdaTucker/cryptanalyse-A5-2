@@ -20,27 +20,27 @@
 %\usepackage{emptypage}
 \usepackage{hyperref}
 \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
 }
 \newcount\colveccount
 \newcommand*\colvec[1]{
-        \global\colveccount#1
-        \begin{pmatrix}
-        \colvecnext
+  \global\colveccount#1
+  \begin{pmatrix}
+    \colvecnext
 }
 \def\colvecnext#1{
-        #1
-        \global\advance\colveccount-1
-        \ifnum\colveccount>0
-                \\
-                \expandafter\colvecnext
-        \else
-                \end{pmatrix}
-        \fi
+  #1
+  \global\advance\colveccount-1
+  \ifnum\colveccount>0
+  \\
+  \expandafter\colvecnext
+  \else
+  \end{pmatrix}
+  \fi
 }
 \title{Hashing Functions}
 \author{}
@@ -49,29 +49,29 @@
 \begin{document}
 \begin{titlepage}
   \begin{sffamily}
-  \begin{center}
+    \begin{center}
 
-    Univesité de Bordeaux\\ Sciences \& Technologie\\
-           351 Cours de la Liberation\\33400 Talence\\[1em]
-            \textbf{\underline{- Projet Cryptanalyse -}}\\[1.5cm]
-           
-    \includegraphics[scale=0.11]{UB.jpg}
-    \\[3cm]
+      Univesité de Bordeaux\\ Sciences \& Technologie\\
+      351 Cours de la Liberation\\33400 Talence\\[1em]
+      \textbf{\underline{- Projet Cryptanalyse -}}\\[1.5cm]
+      
+      \includegraphics[scale=0.11]{UB.jpg}
+      \\[3cm]
+      
+      { \huge \bfseries Projet sur la cryptanalyse de A5/2\\[0.5cm] }
+      \begin{flushright}
+        \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 2 CSI --- Cryptologie \& Sécurité Informatique}\\[6.6cm]
+      \end{flushright}
+      
+      
+      \today
 
-    { \huge \bfseries Projet sur la cryptanalyse de A5/2\\[0.5cm] }
-    \begin{flushright}
-      \bfseries {Amelie GUEMON \& Ida TUCKER\\[1em]Master 2 CSI --- Cryptologie \& Sécurité Informatique}\\[6.6cm]
-    \end{flushright}
-    
-   
-    \today
-
-  \end{center}
+    \end{center}
   \end{sffamily}
 \end{titlepage}
 
 %% QUESTION 1
-\section{Implémentation du chiffrement A5/2 }
+\section{Implémentation du chiffrement A5/2}
 Implémentation du chiffrement A5/2 et de ses fonctions intermédiaires, cf. a5-2.sage
 
 %% QUESTION 2
