@@ -173,21 +173,21 @@ sortie: les registres R1, R2, R3 dont les contenus sont exprimés au moyens d'é
 BPRX = BooleanPolynomialRing(64,'x')
 v = BPRX.gens()
 def equations_lineaires(R4, s):
-    R1_inconnu = vector(v[:19])
-    R2_inconnu = vector(v[19:41])
-    R3_inconnu = vector(v[41:])
+    R1_q3 = vector(v[:19])
+    R2_q3 = vector(v[19:41])
+    R3_q3 = vector(v[41:])
     r4 = vector(copy(R4))
     # on veut les équations a l'etape s
     for i in range(s):
         m = maj (r4[6],r4[13],r4[9])
         if r4[6] == m:
-            R1_inconnu = M1 * R1_inconnu
+            R1_q3 = M1 * R1_q3
         if r4[13] == m:
-            R2_inconnu = M2 * R2_inconnu
+            R2_q3 = M2 * R2_q3
         if r4[9] == m:
-            R3_inconnu = M3 * R3_inconnu
+            R3_q3 = M3 * R3_q3
         r4 = M4 * r4
-    return R1_inconnu, R2_inconnu, R3_inconnu, r4
+    return R1_q3, R2_q3, R3_q3, r4
 
 display3 = false or display
 R4_connu = Sequence([GF(2)(0), 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1])
@@ -207,8 +207,6 @@ if display3:
 
 print "\n* * * * Question 4 * * * *\n"
 print "Proof made in the report."
-
-
 
 
 ''' QUESTION 5 '''
@@ -297,7 +295,7 @@ def linear_mat_vect(num_lines, num_cols, eq_quadratique, monoms):
                                 Linear_Matrix[i,j] = GF(2)(1)
         return Linear_Matrix, Linear_Vector
 
-print "Linearization made in a function."
+print "Linearisation of equations linking z to the registers after initialisation.\n"
 
 
 ''' QUESTION 8 '''
@@ -426,7 +424,7 @@ z2 = Sequence([GF(2)(0), 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0
 N = 228
 
 ''' Déduction des xi à partir de R4 '''
-
+timing = cputime()
 # génération des équations quadratiques avec modifications des Registres 4
 R41_q13 = copy(R40_q13)
 R41_q13[len(R41_q13)-1] += 1
@@ -456,6 +454,7 @@ tmp = Lin_Vector_z0_z1_z2 + z0_z1_z2
 # test pour trouver la solution 
 try:	
     Result = Lin_Matrix_z0_z1_z2.solve_right(tmp )
+    recover_reg_time = cputime(timing)
 except ValueError:
 	print "Aucune solution\n"
 
@@ -485,13 +484,14 @@ R12_q13[len(R12_q13)-2] += GF(2)(1)
 R22_q13[len(R22_q13)-2] += GF(2)(1)
 R32_q13[len(R32_q13)-2] += GF(2)(1)
 
-display13 = false or display
+display13 = true or display
+
 if display13:
     if (production(N, R10_q13, R20_q13, R30_q13, R40_q13) == z0) \
         and (production(N, R11_q13, R21_q13, R31_q13, R41_q13) == z1) \
         and (production(N, R12_q13, R22_q13, R32_q13, R42_q13) == z2):
-        print "You have sucessfully recovered all the registers\n"        
-
+        print "You have sucessfully recovered all the registers."        
+        print "Time taken to recover the registers: ",recover_reg_time , "\n"
 
 ''' Déduction de la clef à partir des xi '''
 
@@ -528,24 +528,14 @@ for vec in V:
 	Registers_q13 = list(R10_q13) + list(R20_q13) + list(R30_q13) + list(R40_q13)
 	try:
 		K_Result = K_Matrix.solve_right(K_Vector + vector(Registers_q13))
+                recover_key_time = cputime(timing)
 		z_test = a5_2(K_Result,iv_q13,N)
 		if z_test == z0:
-			if display13:
-				print "You have successfully found the key."	
+                       	if display13:
+                                print "You have successfully found the key."
+                                print "Time taken to recover the key: ", recover_key_time, "\n"	
 			break
 	except ValueError:
 		continue
 
 
-
-''' QUESTION 14 '''
-
-print "\n* * * * Question 14 * * * *\n"
-print "Proof made in the report."
-
-
-
-''' QUESTION 15 '''
-
-print "\n* * * * Question 15 * * * *\n"
-print "Proof made in the report."

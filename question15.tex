@@ -1,6 +1,13 @@
 \section{Améliorations dans la conception d'A5/2}
-Plusieurs changements au protocole pourraient permettre de le protéger contre l'attaque vue précédement:
+Plusieurs changements au protocole pourraient permettre de le protéger contre
+l'attaque vue précédement:
 \begin{itemize}
-\item{Initialiser les registres avec des valeurs secrètes (ou au moins non nulles).}
-\item{Complexifier les équations reliant les bits de la suite chiffrante et l'état des registres après l'initialisation. Ceci peut se faire en choisissant une fonction booléenne de plus haut degré que la fonction Maj.}
+\item{Initialiser les registres avec des valeurs secrètes (ou au moins non
+  nulles).}
+\item{Complexifier les équations reliant les bits de la suite chiffrante et
+  l'état des registres après l'initialisation. Ceci peut se faire en
+  choisissant une fonction booléenne de plus haut degré que la fonction Maj.}
+\item{Ne pas faire dépendre la mise à jour des registres $R_1$, $R_2$ et
+  $R_3$ uniquement du registre $R_4$, il serait en fait plus judicieux de
+  calculer la fonction Maj sur des bits de $R_1$, $R_2$ et $R_3$, puisque ceux-ci ont des caractères moins prévisibles que $R_4$ (ils ne sont pas mis à jour à chaque passage par la fonction A5/2-step). }
 \end{itemize}
