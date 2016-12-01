@@ -14,13 +14,14 @@ Notons, au $k^{ième}$ passage par la fonction A5/2-step:
 \item $R_2 = (x^{\lbrack k \rbrack}_{19}, \ldots, x^{\lbrack k \rbrack}_{40})$
 \item $R_3 = (x^{\lbrack k \rbrack}_{41}, \ldots, x^{\lbrack k \rbrack}_{63})$
 \end{itemize}
-
-Montrons qu'on peut exprimer le contenu des registres $R_1$, $R_2$, $R_3$ au moyen d'équations linéaires en les $x_i$ par récurrence.
-
+\paragraph{}
+Montrons, par récurrence, que l'on peut exprimer le contenu des registres $R_1$, $R_2$, $R_3$ au moyen d'équations linéaires en les $x_i$.
+\paragraph{}
 Il est clair qu'à l'étape zero (avant le premier passage par A5/2-step), la propriété est vraie.
 Supposons la vraie au rang $k$ pour $k \geq 0$.
 On a donc $x^{\lbrack k\rbrack}_0, \ldots, x^{\lbrack k \rbrack}_{63}$ qui s'expriment comme équation linéaire des $x_i$.
-On passe alors dans la fonction A5/2-step:
+\paragraph{}
+On passe alors dans la fonction A5/2-step, et au rang $k+1$ on a les registres suivants:
 \begin{itemize}
 \item Si m = $R_{4,6}$ on met à jour le $LFSR_1$, et $R_1$ devient:
 $$R_1 = (x^{\lbrack k+1\rbrack}_0, \ldots, x^{\lbrack k+1 \rbrack}_{18}) = (x^{\lbrack k\rbrack}_1, x^{\lbrack k\rbrack}_2, \ldots, x^{\lbrack k \rbrack}_{18}, x^{\lbrack k\rbrack}_0 + x^{\lbrack k\rbrack}_1 + x^{\lbrack k\rbrack}_2 + x^{\lbrack k\rbrack}_5)$$
@@ -33,5 +34,5 @@ $$R_3 = (x^{\lbrack k+1\rbrack}_{41}, \ldots, x^{\lbrack k+1 \rbrack}_{63}) = (x
 On a donc le dernier élément de chaque registre au $(k+1)^{ième}$ passage qui est une somme des contenus des registre au $k^{ième}$ passage.
 C'est bien une équation linéaire en les $x_i$ par linéarité de la somme.
 Les autres éléments des registres sont les éléments de l'étape précédente décalés. C'est à dire $x^{\lbrack k+1\rbrack}_{i} = x^{\lbrack k\rbrack}_{i+1}$ pour $ i \neq 18, 40, 63$.
-
+\paragraph{}
 On a bien montré que durant toutes les étapes de la production de suite chiffrante de A5/2, on peut exprimer les contenus des registres $R_1$, $R_2$, $R_3$ au moyen d'équations linéaires en les $x_i$. 
